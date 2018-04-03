@@ -1,4 +1,4 @@
-package View;
+/*package View;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,19 +13,35 @@ import Model.Produto;
 
 public class Main{	
 	static Scanner leitor = new Scanner(System.in).useLocale(Locale.US);
+	
+	public static void atualizarEstoque(ArrayList<Produto> carrinho) {
+		for(int i=0;i <=(carrinho.size()-1); i++){
+			Produto atual= carrinho.get(i);
+			CarrinhoDAO.atualizarEstoque(atual.getCodigoProduto(), atual.getQtdComprada());
+		}
+	}
+	public static int lerCodigoRepetido(int codigoAtual, ArrayList<Produto> carrinho) {
+		
+		
+		for(int i=0; i<= (carrinho.size()-1);i++) {
+			Produto produto= carrinho.get(i);
+			return produto.getCodigoProduto() ==codigoAtual?i:-1;
+		}
+		return -1;
+	}
 	public static void compra() {
 		String fim="";
-		int codigoAnterior=0, codigoAtual=0;
+		int codigoAtual=0;
 		ArrayList<Produto> carrinho= new ArrayList<>();
 		double preco=0;
 		String nome="";
 		do {
-			
 				System.out.println("Leia o código");
-				codigoAtual= leitor.nextInt();
-				System.out.println("Quantidade: ");
-				int qtdProduto=leitor.nextInt();
-				if(codigoAtual!=codigoAnterior) {
+				codigoAtual = leitor.nextInt();
+				int repetido=lerCodigoRepetido(codigoAtual, carrinho);
+				if(repetido<0) {
+					System.out.println("Quantidade: ");
+					int qtdProduto=leitor.nextInt();
 					ResultSet rs = ProdutoDAO.importarProduto(codigoAtual);
 					try {
 						while(rs.next()) {
@@ -38,8 +54,10 @@ public class Main{
 					Produto produto= new Produto(codigoAtual, qtdProduto, nome, preco);
 					carrinho.add(produto);
 				}else {
-					Produto mesmoProduto= carrinho.get(carrinho.size()-1);
-					mesmoProduto.setQtdComprada(mesmoProduto.getQtdComprada() +1);
+					System.out.println("Quantidade: ");
+					int qtdProduto=leitor.nextInt();
+					Produto mesmoProduto= carrinho.get(repetido);
+					mesmoProduto.setQtdComprada(mesmoProduto.getQtdComprada() +qtdProduto);
 				}
 				System.out.println("Para concluir a compra digite 1.");
 				fim=leitor.next();
@@ -59,6 +77,7 @@ public class Main{
 		leitor=new Scanner(System.in);
 		Carrinho carrinhoFinal = new Carrinho(totalCompra, "", nomeCaixa, pagamento);
 		System.out.println(CarrinhoDAO.efetuarCompra(carrinhoFinal));
+		atualizarEstoque(carrinho);
 	}
 	public static void cadastroProdutos() {
 		double preco;
@@ -102,3 +121,4 @@ public class Main{
 		
 	}
 }
+*/
