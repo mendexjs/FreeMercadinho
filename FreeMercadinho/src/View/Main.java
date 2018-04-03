@@ -14,21 +14,8 @@ import Model.Produto;
 public class Main{	
 	static Scanner leitor = new Scanner(System.in).useLocale(Locale.US);
 	
-	public static void atualizarEstoque(ArrayList<Produto> carrinho) {
-		for(int i=0;i <=(carrinho.size()-1); i++){
-			Produto atual= carrinho.get(i);
-			CarrinhoDAO.atualizarEstoque(atual.getCodigoProduto(), atual.getQtdComprada());
-		}
-	}
-	public static int lerCodigoRepetido(int codigoAtual, ArrayList<Produto> carrinho) {
-		
-		
-		for(int i=0; i<= (carrinho.size()-1);i++) {
-			Produto produto= carrinho.get(i);
-			return produto.getCodigoProduto() ==codigoAtual?i:-1;
-		}
-		return -1;
-	}
+	
+	
 	public static void compra() {
 		String fim="";
 		int codigoAtual=0;
@@ -79,28 +66,7 @@ public class Main{
 		System.out.println(CarrinhoDAO.efetuarCompra(carrinhoFinal));
 		atualizarEstoque(carrinho);
 	}
-	public static void cadastroProdutos() {
-		double preco;
-		String sair="";
-		do{
-			System.out.println("Leia o codigo do produto");
-			int cod= leitor.nextInt();
-			System.out.println("Nome do produto");
-			String nome= leitor.next();
-		
-			leitor= new Scanner(System.in);
-			System.out.println("Quantidade");
-			int qtd= leitor.nextInt();
-			System.out.println("preco: ");
-			preco= leitor.nextDouble();
-			
-			Produto produtoCadastro=new Produto(cod, nome, qtd, preco);
-			System.out.println(ProdutoDAO.cadastrarProduto(produtoCadastro));
-			System.out.println("Continuar cadastrando? S/N");
-			sair=(leitor.next()).toUpperCase();
-		}while(!sair.equals("N"));	
-		System.out.println("\n\n Cadastro completo, voltando ao Menu! \n\n");
-	}
+	
 	
 	public static void main(String[] args) {
 		System.out.println("IFShop");

@@ -1,14 +1,15 @@
 package Model;
 public class Produto {
-	int codigoProduto, qtdEstoque;
+	long codigoProduto;
+	int qtdEstoque;
 	String nomeProduto;
 	double valorUnid;
 	int qtdComprada;
 	//construtor para produto cadastrado
-	public Produto(int codigoProduto, String nomeProduto, int qtdEstoque, double valorUnid) {
-		this.codigoProduto = codigoProduto;
-		this.qtdEstoque=qtdEstoque;
-		this.nomeProduto=nomeProduto;
+	public Produto(long codigoBarra, String nome, int qtdEst, double valorUnid) {
+		this.codigoProduto = codigoBarra;
+		this.qtdEstoque=qtdEst;
+		this.nomeProduto=nome;
 		this.valorUnid = valorUnid;
 	}
 	public int getQtdComprada() {
@@ -18,18 +19,18 @@ public class Produto {
 		this.qtdComprada = qtdComprada;
 	}
 	//sobrecarga de construtor para produto comprado
-	public Produto(int codigoProduto,int qtdComprada, String nomeProduto, double valorUnid) {
+	public Produto(long codigoProduto,int qtdComprada, String nomeProduto, double valorUnid) {
 		this.codigoProduto = codigoProduto;
 		this.nomeProduto=nomeProduto;
 		this.valorUnid = valorUnid;
 		this.qtdComprada=qtdComprada;
 	}
 
-	public int getCodigoProduto() {
+	public long getCodigoProduto() {
 		return codigoProduto;
 	}
 
-	public void setCodigoProduto(int codigoProduto) {
+	public void setCodigoProduto(long codigoProduto) {
 		this.codigoProduto = codigoProduto;
 	}
 

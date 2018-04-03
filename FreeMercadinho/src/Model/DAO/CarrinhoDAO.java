@@ -1,4 +1,4 @@
-package Control.DAO;
+package Model.DAO;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,9 +10,9 @@ import Model.Produto;
 
 public class CarrinhoDAO {
 	
-	public static String efetuarCompra(Carrinho compra){
+	public static boolean efetuarCompra(Carrinho compra){
 		 Conexão c = new Conexão(); 
-		 String sql="insert into compras values(null, ?, null, ?, ?)";
+		 String sql="insert into compras values(null, ?, now(), ?, ?)";
 		 PreparedStatement stmt;
 		try {
 			stmt = c.getCon().prepareStatement(sql);
@@ -25,12 +25,12 @@ public class CarrinhoDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			return ("Problemas na conexão do seu servidor.");
+			return false;
 		} 	 
-		return "Compra efetuada com Sucesso!";
+		return true;
 	}
 
-	public static void atualizarEstoque(int codigoProduto, int qtdComprada) {
+	public static boolean atualizarEstoque(long codigoBarra, int qtdComprada) {
 		Conexão c = new Conexão();
 		String sql="UPDATE produto SET qtdEstoque=qtdEstoque-? where codigoProduto=? ";
 		PreparedStatement stmt;
@@ -38,14 +38,12 @@ public class CarrinhoDAO {
 			stmt = c.getCon().prepareStatement(sql);
 			
 			stmt.setInt(1, qtdComprada);
-			stmt.setInt(2, codigoProduto);
+			stmt.setLong(2, codigoBarra);
 	        stmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Erro ao atualizar estoque");
+			return false;
 		} 	 
-		
-		
-		
+		return true;	
 	}
 }

@@ -1,42 +1,43 @@
 package View;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
+
+import Control.CarrinhoControl;
+import Model.Produto;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ImageIcon;
 import java.awt.Color;
-import java.awt.SystemColor;
-import javax.swing.UIManager;
 import javax.swing.JScrollBar;
 import java.awt.Button;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaPrincipal extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField campoCodigo;
+	private JTextField campoQtdCod;
 
 	
 	public static void main(String[] args) {
 		try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -62,7 +63,7 @@ public class TelaPrincipal extends JFrame {
 	
 	public TelaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 910, 706);
+		setBounds(220, 10, 910, 706);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(204, 204, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -94,9 +95,10 @@ public class TelaPrincipal extends JFrame {
 		lblDescrioDo.setBounds(30, 54, 271, 27);
 		contentPane.add(lblDescrioDo);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(23, 316, 803, 309);
-		contentPane.add(textArea);
+		JTextArea itensComprados = new JTextArea();
+		itensComprados.setBounds(23, 316, 803, 309);
+		itensComprados.setEnabled(false);
+		contentPane.add(itensComprados);
 		
 		JScrollBar scrollBar = new JScrollBar();
 		scrollBar.setMaximum(20);
@@ -104,15 +106,29 @@ public class TelaPrincipal extends JFrame {
 		scrollBar.setBounds(826, 316, 17, 309);
 		contentPane.add(scrollBar);
 		
-		textField = new JTextField();
-		textField.setBounds(224, 53, 612, 27);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		JPanel panel_17 = new JPanel();
+		panel_17.setBackground(Color.WHITE);
+		panel_17.setBounds(220, 55, 615, 23);
+		contentPane.add(panel_17);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(23, 134, 121, 27);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		JLabel campoDescricao = new JLabel("");
+		campoDescricao.setVerticalAlignment(SwingConstants.TOP);
+		campoDescricao.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		campoDescricao.setHorizontalAlignment(SwingConstants.LEFT);
+		panel_17.add(campoDescricao);
+		
+		JLabel label_1 = new JLabel("");
+		label_1.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		panel_17.add(label_1);
+		
+		JPanel panel_13 = new JPanel();
+		panel_13.setBackground(Color.WHITE);
+		panel_13.setBounds(24, 135, 121, 27);
+		contentPane.add(panel_13);
+		
+		JLabel campoQuantidade = new JLabel("");
+		campoQuantidade.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		panel_13.add(campoQuantidade);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 51, 102));
@@ -144,10 +160,14 @@ public class TelaPrincipal extends JFrame {
 		lblX.setBounds(158, 123, 67, 41);
 		contentPane.add(lblX);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(190, 134, 133, 27);
-		contentPane.add(textField_2);
+		JPanel panel_14 = new JPanel();
+		panel_14.setBounds(190, 134, 133, 27);
+		contentPane.add(panel_14);
+		panel_14.setBackground(Color.WHITE);
+		
+		JLabel campoValorQuantidade = new JLabel("");
+		campoValorQuantidade.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		panel_14.add(campoValorQuantidade);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(0, 51, 102));
@@ -169,6 +189,15 @@ public class TelaPrincipal extends JFrame {
 		label.setBounds(338, 123, 67, 41);
 		contentPane.add(label);
 		
+		JPanel panel_15 = new JPanel();
+		panel_15.setBackground(Color.WHITE);
+		panel_15.setBounds(363, 135, 133, 27);
+		contentPane.add(panel_15);
+		
+		JLabel campoSubTotal = new JLabel("");
+		campoSubTotal.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		panel_15.add(campoSubTotal);
+		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(new Color(0, 51, 102));
 		panel_6.setBounds(363, 108, 133, 27);
@@ -179,32 +208,40 @@ public class TelaPrincipal extends JFrame {
 		lblSubTotal.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		panel_6.add(lblSubTotal);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(363, 134, 133, 27);
-		contentPane.add(textField_3);
-		
 		JPanel panel_7 = new JPanel();
 		panel_7.setBackground(new Color(51, 102, 204));
 		panel_7.setBounds(360, 104, 141, 60);
 		contentPane.add(panel_7);
 		
 		Button button = new Button("Concluir");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String nomeFunc= "João";
+				ConcluirCompra.run(CarrinhoControl.calcularTotal(),nomeFunc);
+			}
+		});
+		button.setForeground(UIManager.getColor("Button.light"));
 		button.setBackground(new Color(0, 153, 102));
 		button.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		button.setBounds(610, 185, 194, 34);
+		button.setBounds(610, 190, 194, 34);
 		contentPane.add(button);
 		
 		Button button_1 = new Button("Cancelar Item");
+		button_1.setForeground(UIManager.getColor("Button.disabledShadow"));
 		button_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		button_1.setBackground(new Color(255, 204, 102));
 		button_1.setBounds(610, 226, 194, 34);
 		contentPane.add(button_1);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(609, 140, 194, 34);
-		contentPane.add(textField_4);
+		JPanel panel_16 = new JPanel();
+		panel_16.setBackground(Color.WHITE);
+		panel_16.setBounds(609, 142, 194, 29);
+		contentPane.add(panel_16);
+		
+		JLabel campoTotal = new JLabel("");
+		campoTotal.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		panel_16.add(campoTotal);
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(new Color(51, 102, 204));
@@ -215,7 +252,8 @@ public class TelaPrincipal extends JFrame {
 		panel_9.add(panel_8);
 		panel_8.setBackground(new Color(102, 153, 255));
 		
-		JLabel lblTotalDaCompra = new JLabel("TOTAL DA COMPRA: R$");
+		JLabel lblTotalDaCompra = new JLabel("   TOTAL DA COMPRA:   ");
+		lblTotalDaCompra.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotalDaCompra.setForeground(Color.WHITE);
 		lblTotalDaCompra.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		panel_8.add(lblTotalDaCompra);
@@ -240,10 +278,39 @@ public class TelaPrincipal extends JFrame {
 		lblCdigoDeBarras.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		panel_11.add(lblCdigoDeBarras);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(23, 244, 151, 27);
-		contentPane.add(textField_5);
+		campoCodigo = new JTextField();
+		campoCodigo.setFont(new Font("Tahoma", Font.BOLD, 16));
+		campoCodigo.setHorizontalAlignment(SwingConstants.CENTER);
+		campoCodigo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				int tecla = arg0.getKeyCode();
+		        if (tecla == KeyEvent.VK_ENTER) {
+		        	Produto produtoBuscado= CarrinhoControl.buscarProduto(Long.parseLong(campoCodigo.getText()), 
+		        		Integer.parseInt(campoQtdCod.getText()));
+		        	// Atualizando GUI
+		        	campoCodigo.setText("");
+		        	campoQtdCod.setText("1");
+		        	campoDescricao.setText(produtoBuscado.getNomeProduto());
+		        	campoQuantidade.setText("" + produtoBuscado.getQtdComprada());
+		        	campoValorQuantidade.setText("R$"+ produtoBuscado.getValorUnid());
+		        	campoSubTotal.setText("R$"+ produtoBuscado.getValorUnid() * produtoBuscado.getQtdComprada());
+		        	campoTotal.setText("R$"+ CarrinhoControl.calcularTotal());
+		        //    	   
+		        }
+			}
+		});
+		
+		campoQtdCod = new JTextField();
+		campoQtdCod.setHorizontalAlignment(SwingConstants.CENTER);
+		campoQtdCod.setText("1");
+		campoQtdCod.setFont(new Font("Tahoma", Font.BOLD, 16));
+		campoQtdCod.setColumns(10);
+		campoQtdCod.setBounds(215, 245, 121, 27);
+		contentPane.add(campoQtdCod);
+		campoCodigo.setColumns(10);
+		campoCodigo.setBounds(23, 244, 151, 27);
+		contentPane.add(campoCodigo);
 		
 		JPanel panel_12 = new JPanel();
 		panel_12.setBackground(new Color(51, 102, 204));
@@ -252,7 +319,28 @@ public class TelaPrincipal extends JFrame {
 		
 		JLabel lblMercadoHumilde = new JLabel("Mercad\u00E3o Humilde");
 		lblMercadoHumilde.setFont(new Font("Gabriola", Font.BOLD, 33));
-		lblMercadoHumilde.setBounds(272, 204, 285, 74);
+		lblMercadoHumilde.setBounds(362, 200, 285, 74);
 		contentPane.add(lblMercadoHumilde);
+		
+		JPanel panel_18 = new JPanel();
+		panel_18.setBackground(new Color(0, 51, 102));
+		panel_18.setBounds(215, 218, 121, 27);
+		contentPane.add(panel_18);
+		
+		JLabel lblUnidades = new JLabel("UNIDADES");
+		lblUnidades.setForeground(Color.WHITE);
+		lblUnidades.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		panel_18.add(lblUnidades);
+		
+		JPanel panel_20 = new JPanel();
+		panel_20.setBackground(new Color(51, 102, 204));
+		panel_20.setBounds(212, 214, 128, 60);
+		contentPane.add(panel_20);
+		
+		JLabel label_2 = new JLabel("->");
+		label_2.setHorizontalAlignment(SwingConstants.CENTER);
+		label_2.setFont(new Font("Palatino Linotype", Font.BOLD, 26));
+		label_2.setBounds(175, 226, 35, 34);
+		contentPane.add(label_2);
 	}
 }
