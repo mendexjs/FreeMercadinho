@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Control.CarrinhoControl;
+import Control.Factory.ManipuladorConfig;
 import Model.Produto;
 
 import javax.swing.JMenuBar;
@@ -26,6 +27,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.Properties;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
@@ -64,7 +67,9 @@ public class TelaPrincipal extends JFrame {
 	}
 
 	
-	public TelaPrincipal() {
+	public TelaPrincipal() throws IOException {
+		Properties prop = ManipuladorConfig.getProp(); // abrindo arquivo de configs
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(220, 10, 910, 706);
 		contentPane = new JPanel();
@@ -87,9 +92,6 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		mnCadastrarProdutos.add(mntmCadastrarProdutos);
-		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Login Funcionario");
-		mnCadastrarProdutos.add(mntmNewMenuItem);
 		
 		JMenu mnAjuda = new JMenu("Ajuda");
 		barraMenu.add(mnAjuda);
@@ -231,7 +233,7 @@ public class TelaPrincipal extends JFrame {
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				String nomeFunc= "João";
+				String nomeFunc= prop.getProperty("prop.nomeAtendente");
 				ConcluirCompra.run(CarrinhoControl.calcularTotal(),nomeFunc);
 			}
 		});
@@ -278,7 +280,7 @@ public class TelaPrincipal extends JFrame {
 		panel_10.setBounds(0, 633, 894, 60);
 		contentPane.add(panel_10);
 		
-		JLabel lblCaixaAberto = new JLabel("CAIXA ABERTO");
+		JLabel lblCaixaAberto = new JLabel(prop.getProperty("prop.mensagemRodape"));
 		panel_10.add(lblCaixaAberto);
 		lblCaixaAberto.setForeground(new Color(255, 255, 255));
 		lblCaixaAberto.setFont(new Font("Times New Roman", Font.BOLD, 21));
@@ -332,9 +334,11 @@ public class TelaPrincipal extends JFrame {
 		panel_12.setBounds(20, 214, 158, 60);
 		contentPane.add(panel_12);
 		
-		JLabel lblMercadoHumilde = new JLabel("Mercad\u00E3o Humilde");
+		
+		String nomeMercado=prop.getProperty("prop.nomeMercado");
+		JLabel lblMercadoHumilde = new JLabel(nomeMercado);
 		lblMercadoHumilde.setFont(new Font("Gabriola", Font.BOLD, 33));
-		lblMercadoHumilde.setBounds(375, 220, 285, 74);
+		lblMercadoHumilde.setBounds(373, 175, 285, 55);
 		contentPane.add(lblMercadoHumilde);
 		
 		JPanel panel_18 = new JPanel();
@@ -368,6 +372,16 @@ public class TelaPrincipal extends JFrame {
 		button_2.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/com/sun/javafx/scene/web/skin/Redo_16x16_JFX.png")));
 		button_2.setBounds(808, 282, 35, 34);
 		contentPane.add(button_2);
+		
+		JLabel lblCaixa = new JLabel("Caixa: "+prop.getProperty("prop.numeroCaixa"));
+		lblCaixa.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCaixa.setBounds(375, 282, 121, 23);
+		contentPane.add(lblCaixa);
+		
+		JLabel lblAtendente = new JLabel("Atendente: "+prop.getProperty("prop.nomeAtendente"));
+		lblAtendente.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblAtendente.setBounds(372, 233, 215, 27);
+		contentPane.add(lblAtendente);
 		
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

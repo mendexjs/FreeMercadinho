@@ -39,7 +39,7 @@ public class ConcluirCompra extends JFrame {
 	
 	public ConcluirCompra(double total, String atendente) {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(400, 250, 323, 239);
+		setBounds(525, 200, 323, 239);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -84,6 +84,11 @@ public class ConcluirCompra extends JFrame {
 		contentPane.add(button);
 		
 		Button button_1 = new Button("Cancelar");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
 		button_1.setForeground(SystemColor.menu);
 		button_1.setFont(new Font("Dialog", Font.BOLD, 14));
 		button_1.setBackground(new Color(153, 51, 0));

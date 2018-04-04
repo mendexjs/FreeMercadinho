@@ -41,7 +41,7 @@ public class CancelarItem extends JFrame {
 	public CancelarItem() {
 		setTitle("Cancelamento de item\r\n");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(450, 150, 322, 237);
+		setBounds(500, 200, 322, 237);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
