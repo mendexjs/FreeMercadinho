@@ -8,8 +8,16 @@ public class CarrinhoControl {
 	
 	static ArrayList<Produto> carrinho= new ArrayList<>();
 	
+	public static String listarComprados(){
+		String produtos="";
+		for(int i=0; i<= carrinho.size()-1;i++) {
+			Produto prod= carrinho.get(i);
+			produtos+= " *"+prod.getNomeProduto()+" --- qtd:"+prod.getQtdComprada() + " unid: R$"+prod.getValorUnid()+ " sub-total:R$"+prod.getQtdComprada()*prod.getValorUnid()+ " \r\n";
+		}
+		return produtos;
+	}
 	public static int lerCodigoRepetido(long codigoBarra, ArrayList<Produto> carrinho) {	
-		for(int i=0; i<= (carrinho.size()-1);i++) {
+		for(int i=0; i<= (carrinho.size()-1); i++) {
 			Produto produto= carrinho.get(i);
 			return produto.getCodigoProduto() ==codigoBarra?i:-1;
 		}
@@ -62,6 +70,18 @@ public class CarrinhoControl {
 		}
 		
 		return totalCompra;
+	}
+	
+	public static boolean cancelarItem(long codigoBarra, int quantidade) {
+		for(int i=0; i<=(carrinho.size()-1);i++) {
+			Produto prod= carrinho.get(i);
+			if(prod.getCodigoProduto()==codigoBarra) {
+				prod.setQtdComprada(prod.getQtdComprada() - quantidade);
+				return true;
+			}
+		}
+		return false;
+		
 	}
 	
 }

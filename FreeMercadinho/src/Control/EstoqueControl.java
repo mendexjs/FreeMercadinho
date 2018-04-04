@@ -12,9 +12,13 @@ public class EstoqueControl {
 	}
 
 	
-	public static void cadastroProdutos(long codigoProd, int qtdProd,String nomeProd, double precoProd) {
+	public static boolean cadastroProdutos(long codigoProd, int qtdProd,String nomeProd, double precoProd) {
 		Produto produtoCadastro=new Produto(codigoProd, nomeProd,qtdProd, precoProd);
-		System.out.println(ProdutoDAO.cadastrarProduto(produtoCadastro));
+		if(ProdutoDAO.cadastrarProduto(produtoCadastro)) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 }

@@ -24,10 +24,10 @@ public class ConcluirCompra extends JFrame {
 
 	
 	
-	ConcluirCompra frame;
+	static ConcluirCompra frame;
 	public static void run(double total, String atendente) {
 		try {
-			ConcluirCompra frame = new ConcluirCompra(total,atendente);
+			frame = new ConcluirCompra(total,atendente);
 			frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,6 +70,7 @@ public class ConcluirCompra extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(CarrinhoControl.concluirCompra(atendente,""+comboBox.getSelectedItem())) {
 					JOptionPane.showMessageDialog(frame,"Compra concluida com exito.");
+					frame.dispose();
 					
 				}else {
 					JOptionPane.showMessageDialog(frame,"Houve algum erro!!");

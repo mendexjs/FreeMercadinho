@@ -25,7 +25,7 @@ public class ProdutoDAO {
 		return rs;
 	    }
 
-	public static String cadastrarProduto(Produto produtoCadastro) {
+	public static boolean cadastrarProduto(Produto produtoCadastro) {
 		
 		Conexão c = new Conexão(); 
 		String sql="insert into produto values(?, ?, ?, ?)";
@@ -39,9 +39,9 @@ public class ProdutoDAO {
 			        
 			stmt.execute();
 		} catch (SQLException e) {
-			return ("Problemas na conexão do seu servidor.");
+			return false;
 		} 	 
-		return "Produto cadastrado com Sucesso!\n\n";	
+		return true;	
 		    
 	}
 }
