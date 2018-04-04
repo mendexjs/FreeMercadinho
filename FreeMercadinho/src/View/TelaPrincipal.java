@@ -26,6 +26,9 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JButton;
 
 public class TelaPrincipal extends JFrame {
 
@@ -78,6 +81,11 @@ public class TelaPrincipal extends JFrame {
 		barraMenu.add(mnCadastrarProdutos);
 		
 		JMenuItem mntmCadastrarProdutos = new JMenuItem("Cadastrar Produtos");
+		mntmCadastrarProdutos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaCadastroProduto.run();
+			}
+		});
 		mnCadastrarProdutos.add(mntmCadastrarProdutos);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Login Funcionario");
@@ -87,6 +95,11 @@ public class TelaPrincipal extends JFrame {
 		barraMenu.add(mnAjuda);
 		
 		JMenuItem mntmSobreOSistema = new JMenuItem("Sobre o Sistema");
+		mntmSobreOSistema.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SobreOSistema.run();
+			}
+		});
 		mnAjuda.add(mntmSobreOSistema);
 		
 		JLabel lblDescrioDo = new JLabel("DESCRI\u00C7\u00C3O DO PRODUTO:");
@@ -96,8 +109,9 @@ public class TelaPrincipal extends JFrame {
 		contentPane.add(lblDescrioDo);
 		
 		JTextArea itensComprados = new JTextArea();
+		itensComprados.setText("");
+		itensComprados.setEditable(false);
 		itensComprados.setBounds(23, 316, 803, 309);
-		itensComprados.setEnabled(false);
 		contentPane.add(itensComprados);
 		
 		JScrollBar scrollBar = new JScrollBar();
@@ -224,19 +238,20 @@ public class TelaPrincipal extends JFrame {
 		button.setForeground(UIManager.getColor("Button.light"));
 		button.setBackground(new Color(0, 153, 102));
 		button.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		button.setBounds(610, 190, 194, 34);
+		button.setBounds(643, 190, 194, 34);
 		contentPane.add(button);
 		
 		Button button_1 = new Button("Cancelar Item");
+		
 		button_1.setForeground(UIManager.getColor("Button.disabledShadow"));
 		button_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		button_1.setBackground(new Color(255, 204, 102));
-		button_1.setBounds(610, 226, 194, 34);
+		button_1.setBounds(643, 226, 194, 34);
 		contentPane.add(button_1);
 		
 		JPanel panel_16 = new JPanel();
 		panel_16.setBackground(Color.WHITE);
-		panel_16.setBounds(609, 142, 194, 29);
+		panel_16.setBounds(642, 142, 194, 29);
 		contentPane.add(panel_16);
 		
 		JLabel campoTotal = new JLabel("");
@@ -245,7 +260,7 @@ public class TelaPrincipal extends JFrame {
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(new Color(51, 102, 204));
-		panel_9.setBounds(602, 108, 208, 166);
+		panel_9.setBounds(635, 108, 208, 166);
 		contentPane.add(panel_9);
 		
 		JPanel panel_8 = new JPanel();
@@ -296,7 +311,7 @@ public class TelaPrincipal extends JFrame {
 		        	campoValorQuantidade.setText("R$"+ produtoBuscado.getValorUnid());
 		        	campoSubTotal.setText("R$"+ produtoBuscado.getValorUnid() * produtoBuscado.getQtdComprada());
 		        	campoTotal.setText("R$"+ CarrinhoControl.calcularTotal());
-		        //    	   
+		        	itensComprados.setText(CarrinhoControl.listarComprados());
 		        }
 			}
 		});
@@ -319,7 +334,7 @@ public class TelaPrincipal extends JFrame {
 		
 		JLabel lblMercadoHumilde = new JLabel("Mercad\u00E3o Humilde");
 		lblMercadoHumilde.setFont(new Font("Gabriola", Font.BOLD, 33));
-		lblMercadoHumilde.setBounds(362, 200, 285, 74);
+		lblMercadoHumilde.setBounds(375, 220, 285, 74);
 		contentPane.add(lblMercadoHumilde);
 		
 		JPanel panel_18 = new JPanel();
@@ -342,5 +357,22 @@ public class TelaPrincipal extends JFrame {
 		label_2.setFont(new Font("Palatino Linotype", Font.BOLD, 26));
 		label_2.setBounds(175, 226, 35, 34);
 		contentPane.add(label_2);
+		
+		JButton button_2 = new JButton("");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				itensComprados.setText(CarrinhoControl.listarComprados());
+	        	campoTotal.setText("R$"+ CarrinhoControl.calcularTotal());
+			}
+		});
+		button_2.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/com/sun/javafx/scene/web/skin/Redo_16x16_JFX.png")));
+		button_2.setBounds(808, 282, 35, 34);
+		contentPane.add(button_2);
+		
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CancelarItem.run();
+			}
+		});
 	}
 }
