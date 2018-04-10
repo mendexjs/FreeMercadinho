@@ -28,6 +28,7 @@ import javax.swing.UIManager;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Properties;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -69,7 +70,7 @@ public class TelaPrincipal extends JFrame {
 	
 	public TelaPrincipal() throws IOException {
 		Properties prop = ManipuladorConfig.getProp(); // abrindo arquivo de configs
-		
+		DecimalFormat df = new DecimalFormat("0.##");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(220, 10, 910, 706);
 		contentPane = new JPanel();
@@ -310,9 +311,9 @@ public class TelaPrincipal extends JFrame {
 		        	campoQtdCod.setText("1");
 		        	campoDescricao.setText(produtoBuscado.getNomeProduto());
 		        	campoQuantidade.setText("" + produtoBuscado.getQtdComprada());
-		        	campoValorQuantidade.setText("R$"+ produtoBuscado.getValorUnid());
-		        	campoSubTotal.setText("R$"+ produtoBuscado.getValorUnid() * produtoBuscado.getQtdComprada());
-		        	campoTotal.setText("R$"+ CarrinhoControl.calcularTotal());
+		        	campoValorQuantidade.setText("R$"+ df.format(produtoBuscado.getValorUnid()));
+		        	campoSubTotal.setText("R$"+ df.format(produtoBuscado.getValorUnid() * produtoBuscado.getQtdComprada()));
+		        	campoTotal.setText("R$"+ df.format(CarrinhoControl.calcularTotal()));
 		        	itensComprados.setText(CarrinhoControl.listarComprados());
 		        }
 			}
@@ -382,6 +383,25 @@ public class TelaPrincipal extends JFrame {
 		lblAtendente.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblAtendente.setBounds(372, 233, 215, 27);
 		contentPane.add(lblAtendente);
+		
+		JButton button_3 = new JButton("");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				campoCodigo.setText("");
+	        	campoQtdCod.setText("1");
+	        	campoDescricao.setText("");
+	        	campoQuantidade.setText("");
+	        	campoValorQuantidade.setText("");
+	        	campoSubTotal.setText("");
+	        	campoTotal.setText("");
+	        	itensComprados.setText("");
+	        	CarrinhoControl.esvaziarCarrinho();
+				
+			}
+		});
+		button_3.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/com/sun/javafx/scene/control/skin/caspian/dialog-error.png")));
+		button_3.setBounds(23, 282, 35, 34);
+		contentPane.add(button_3);
 		
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

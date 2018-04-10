@@ -38,6 +38,7 @@ public class ConcluirCompra extends JFrame {
 
 	
 	public ConcluirCompra(double total, String atendente) {
+		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(525, 200, 323, 239);
 		contentPane = new JPanel();
@@ -69,9 +70,11 @@ public class ConcluirCompra extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(CarrinhoControl.concluirCompra(atendente,""+comboBox.getSelectedItem())) {
-					JOptionPane.showMessageDialog(frame,"Compra concluida com exito.");
-					frame.dispose();
 					
+					JOptionPane.showMessageDialog(frame,"Compra concluida com exito.");
+					TelaAvaliacao.run();
+					frame.dispose();
+					CarrinhoControl.esvaziarCarrinho();
 				}else {
 					JOptionPane.showMessageDialog(frame,"Houve algum erro!!");
 				}

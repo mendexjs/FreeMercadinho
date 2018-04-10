@@ -11,7 +11,7 @@ public class ProdutoDAO {
 	public static ResultSet importarProduto(long codigoBarra) {
 		ResultSet rs;
 		Conexão c = new Conexão();
-		String sql = "select * from produto where codigoProduto=?";
+		String sql = "select * from produto where codigoProduto=? and qtdEstoque>0;";
 		PreparedStatement stmt;
 		try {
 			stmt = c.getCon().prepareStatement(sql);
@@ -19,7 +19,6 @@ public class ProdutoDAO {
 			rs = stmt.executeQuery();
 		}catch (SQLException e) {
 			System.out.println("Falha na conexão ao seu servidor!");
-			
 			rs= null;
 		}
 		return rs;

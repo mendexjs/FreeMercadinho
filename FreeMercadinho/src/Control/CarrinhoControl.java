@@ -1,25 +1,34 @@
 package Control;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import Model.DAO.*;
 import Model.*;
 public class CarrinhoControl {
 	
 	static ArrayList<Produto> carrinho= new ArrayList<>();
-	
+	static DecimalFormat df = new DecimalFormat("0.##");
+
+	public static void esvaziarCarrinho() {
+		carrinho.removeAll(carrinho);
+	}
 	public static String listarComprados(){
 		String produtos="";
 		for(int i=0; i<= carrinho.size()-1;i++) {
 			Produto prod= carrinho.get(i);
-			produtos+= " *"+prod.getNomeProduto()+" --- qtd:"+prod.getQtdComprada() + " unid: R$"+prod.getValorUnid()+ " sub-total:R$"+prod.getQtdComprada()*prod.getValorUnid()+ " \r\n";
+			if(!prod.getNomeProduto().equals("")) {
+				produtos+= " *"+prod.getNomeProduto()+" --- qtd:"+prod.getQtdComprada() + " unid: R$"+  df.format(prod.getValorUnid())+ " sub-total:R$"+df.format(prod.getQtdComprada()*prod.getValorUnid())+ " \r\n";
+			}
 		}
 		return produtos;
 	}
-	public static int lerCodigoRepetido(long codigoBarra, ArrayList<Produto> carrinho) {	
+	public static int lerCodigoRepetido(long codigoBarra) {
 		for(int i=0; i<= (carrinho.size()-1); i++) {
 			Produto produto= carrinho.get(i);
-			return produto.getCodigoProduto() ==codigoBarra?i:-1;
+			if(produto.getCodigoProduto() ==codigoBarra) {
+				return i;
+			}
 		}
 		return -1;
 	}
@@ -28,7 +37,7 @@ public class CarrinhoControl {
 	public static Produto buscarProduto(long codigoBarra, int qtdProd) {
 		double preco=0;
 		String nome="";
-		int repetido=lerCodigoRepetido(codigoBarra, carrinho);
+		int repetido=lerCodigoRepetido(codigoBarra);
 		if(repetido<0) {
 			ResultSet rs = ProdutoDAO.importarProduto(codigoBarra);
 			try {
@@ -38,6 +47,7 @@ public class CarrinhoControl {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return null;
 			}
 			Produto produto= new Produto(codigoBarra, qtdProd, nome, preco);
 			carrinho.add(produto);
